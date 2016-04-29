@@ -23,11 +23,19 @@
         end
     end
 
-    time_interval = [["30m", "30m"],
+    time_interval = [["", ""],
+                     ["30m", "30m"],
                      ["1h", "1h"],
                      ["1h30m", "1h30m"],
                      ["2h", "2h"]] 
   %>
+  <div class="col-sm-3">
+  </div>
+  <p class="text-muted col-sm-9">
+  時間は次のいずれかの方法で入力してください<br>
+  ・開始時刻と終了時刻を入力する<br>
+  ・使用時間幅を入力する
+  </p>
   <%= f.input :time_point_start,
     as: :select, 
     collection: time_point,
@@ -36,12 +44,14 @@
   <%= f.input :time_point_end,
     as: :select, 
     collection: time_point,
-    selected: @stage_order.time_point_end
+    selected: @stage_order.time_point_end,
+    hint: t(".hint_time_point")
   %>
   <%= f.input :time_interval,
     as: :select, 
     collection: time_interval,
-    selected: @stage_order.time_interval
+    selected: @stage_order.time_interval,
+    hint: t(".hint_time_interval")
   %>
 
   <%= f.button :submit, :class => 'btn-primary' %>

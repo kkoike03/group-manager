@@ -24,7 +24,8 @@ ja:
       confirm: この操作は取り消せません. 本当に削除しますか?
   stage_orders:
     form:
-      hint_time: 例）13時から14時まで，1時間程度
+      hint_time_point: 厳密な時刻を指定したい場合はこちら 例) 開始時刻 13:00 終了時刻 14:00
+      hint_time_interval: 使用する時間幅のみ指定する場合はこちら
   employees:
     form:
       hint_name: 例) 技大 太郎
