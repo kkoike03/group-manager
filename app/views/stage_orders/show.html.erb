@@ -14,16 +14,13 @@
   <dd><%= @stage_order.kibou1 %></dd>
   <dt><strong><%= model_class.human_attribute_name(:stage_second) %>:</strong></dt>
   <dd><%= @stage_order.kibou2 %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:time) %>:</strong></dt>
-  <dd><%= @stage_order.time %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:own_equipment) %>:</strong></dt>
-  <dd><%= @stage_order.own_equipment %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:bgm) %>:</strong></dt>
-  <dd><%= @stage_order.bgm %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:camera_permittion) %>:</strong></dt>
-  <dd><%= @stage_order.camera_permittion %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:loud_sound) %>:</strong></dt>
-  <dd><%= @stage_order.loud_sound %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:time_point_start) %>:</strong></dt>
+  <dd><%= @stage_order.time_point_start %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:time_point_end) %>:</strong></dt>
+  <dd><%= @stage_order.time_point_end %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:time_interval) %>:</strong></dt>
+  <dd><%= @stage_order.time_interval %></dd>
+
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
