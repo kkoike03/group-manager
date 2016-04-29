@@ -19,7 +19,9 @@ ActiveAdmin.register StageOrder do
     column :stage_second do |order|
       order.stage_second ? Stage.find(order.stage_second) : "未回答"
     end
-    column :time
+    column :time_point_start
+    column :time_point_end
+    column :time_interval
     actions
   end
 
@@ -40,7 +42,9 @@ ActiveAdmin.register StageOrder do
     column :stage_second do |order|
       order.stage_second ? Stage.find(order.stage_second) : "未回答"
     end
-    column :time
+    column :time_point_start
+    column :time_point_end
+    column :time_interval
     column("自前の音響機材を使用する") {|order| StageCommonOption.where(group_id: order.group_id).first.own_equipment ? "Yes" : "No" }
     column("実行委員にBGMをかけるのを依頼する") {|order| StageCommonOption.where(group_id: order.group_id).first.bgm ? "Yes" : "No" }
     column("実行委員による撮影を許可する") {|order| StageCommonOption.where(group_id: order.group_id).first.camera_permittion ? "Yes" : "No" }
