@@ -5,7 +5,7 @@ class StageOrder < ActiveRecord::Base
   validates :group_id, :fes_date_id, presence: true
   validates :group_id, :uniqueness => {:scope => [:fes_date_id, :is_sunny] } # 日付と天候でユニーク
   validate :select_different_stage
-  validate :time_is_only_method
+  validate :time_is_only_selected, :start_to_end
 
 
   def tenki
@@ -32,8 +32,8 @@ class StageOrder < ActiveRecord::Base
     return Stage.find( stage_second )
   end
 
-  def time_is_only_method
-    if time_point_start == "未回答" && time_point_end == "未回答" && time_interval == "未回答"
+  def time_is_only_selected
+    if time_point_start == "未回答" && time_point_end == "未回答" && time_interval == "未回答" # レコード生成時のValidation回避
       return
     end
     if time_point_start.empty? & time_point_end.empty? & time_interval.empty?
@@ -51,6 +51,22 @@ class StageOrder < ActiveRecord::Base
     end
     if time_point_start.empty? & time_point_end?
       errors.add( :time_point_start, "入力が必要です" )
+    end
+  end
+
+  def start_to_end
+    if ( time_point_start.empty? | time_point_end.empty? ) || ( time_point_start == "未回答" && time_point_end == "未回答" )
+      return
+    end
+    if time_point_start.split(":")[0].to_i() == time_point_end.split(":")[0].to_i() 
+      if time_point_start.split(":")[1].to_i() >= time_point_end.split(":")[1].to_i()
+        errors.add( :time_point_start, "不正な値です" )
+        errors.add( :time_point_end, "不正な値です" )
+      end
+    end
+    if time_point_start.split(":")[0].to_i() > time_point_end.split(":")[0].to_i() 
+        errors.add( :time_point_start, "不正な値です" )
+        errors.add( :time_point_end, "不正な値です" )
     end
   end
 end
