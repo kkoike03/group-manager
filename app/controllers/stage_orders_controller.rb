@@ -73,6 +73,6 @@ class StageOrdersController < GroupBase
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stage_order_params
-      params.require(:stage_order).permit(:group_id, :is_sunny, :fes_date_id, :stage_first, :stage_second, :time, :own_equipment, :bgm, :camera_permittion, :loud_sound)
+      params.require(:stage_order).permit(:group_id, :is_sunny, :fes_date_id, :stage_first, :stage_second, :time_point_start, :time_point_end, :time_interval)
     end
 end
