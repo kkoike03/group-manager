@@ -51,6 +51,9 @@ ja:
           loud_sound: 大きな音を出す
           is_sunny: 天候
           fes_date_id: 開催日
+          time_point_start: 開始時刻
+          time_point_end: 終了時刻
+          time_interval: 使用時間幅
         place_order:
           group_name: 運営団体の名称
           first: 第一希望

@@ -14,8 +14,12 @@
   <dd><%= @stage_order.kibou1 %></dd>
   <dt><strong><%= model_class.human_attribute_name(:stage_second) %>:</strong></dt>
   <dd><%= @stage_order.kibou2 %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:time) %>:</strong></dt>
-  <dd><%= @stage_order.time %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:time_point_start) %>:</strong></dt>
+  <dd><%= @stage_order.time_point_start %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:time_point_end) %>:</strong></dt>
+  <dd><%= @stage_order.time_point_end %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:time_interval) %>:</strong></dt>
+  <dd><%= @stage_order.time_interval %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
