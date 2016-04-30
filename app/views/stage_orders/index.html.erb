@@ -8,7 +8,9 @@
       <th><%= model_class.human_attribute_name(:group_name) %></th>
       <th><%= model_class.human_attribute_name(:fes_date_id) %></th>
       <th><%= model_class.human_attribute_name(:is_sunny) %></th>
-      <th><%= model_class.human_attribute_name(:time) %></th>
+      <th><%= model_class.human_attribute_name(:time_point_start) %></th>
+      <th><%= model_class.human_attribute_name(:time_point_end) %></th>
+      <th><%= model_class.human_attribute_name(:time_interval) %></th>
       <th><%= model_class.human_attribute_name(:stage_first) %></th>
       <th><%= model_class.human_attribute_name(:stage_second) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -20,7 +22,9 @@
         <td><%= stage_order.group.name %></td>
         <td><%= stage_order.date %></td>
         <td><%= stage_order.tenki %></td>
-        <td><%= stage_order.time %></td>
+        <td><%= stage_order.time_point_start %></td>
+        <td><%= stage_order.time_point_end %></td>
+        <td><%= stage_order.time_interval %></td>
         <td><%= stage_order.stage_first ? stage_order.kibou1 : "未回答" %></td>
         <td><%= stage_order.stage_second ? stage_order.kibou2 : "未回答" %></td>
         <td>
