@@ -10,6 +10,10 @@
   <dd><%= @power_order.item %></dd>
   <dt><strong><%= model_class.human_attribute_name(:power) %>:</strong></dt>
   <dd><%= @power_order.power %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:manufacturer) %>:</strong></dt>
+  <dd><%= @power_order.manufacturer %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:model) %>:</strong></dt>
+  <dd><%= @power_order.model %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
