@@ -22,6 +22,7 @@ ja:
       group_project_name: 企画名
       stage: ステージ
       group_manager_common_option: アプリ共通設定
+      assign_group_place: 使用場所
     attributes:
         group:
           name: 運営団体の名称
@@ -148,3 +149,6 @@ ja:
         group_manager_common_option:
           cooking_start_time: 調理開始時間
           date_of_stool_test: 検便実施日
+        assign_group_place:
+          place_order: 団体名
+          place: 使用場所
