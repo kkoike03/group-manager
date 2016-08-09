@@ -18,4 +18,9 @@ class Place < ActiveRecord::Base
     group_category_id = Group.find(group_id).group_category_id
     self.search_enable_place(group_category_id)
   end
+
+  def self.usable_all_places
+    Place.joins(:place_allow_lists) \
+      .uniq.where(place_allow_lists:{enable:true}).order(:id)
+  end
 end
