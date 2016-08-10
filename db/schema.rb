@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160704090510) do
+ActiveRecord::Schema.define(version: 20160810072112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 20160704090510) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "assign_rental_items", force: :cascade do |t|
+    t.integer  "rental_order_id",  null: false
+    t.integer  "rentable_item_id", null: false
+    t.integer  "num",              null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "assign_rental_items", ["rentable_item_id"], name: "index_assign_rental_items_on_rentable_item_id", using: :btree
+  add_index "assign_rental_items", ["rental_order_id"], name: "index_assign_rental_items_on_rental_order_id", using: :btree
 
   create_table "config_user_permissions", force: :cascade do |t|
     t.string   "form_name",                     null: false
@@ -380,6 +391,8 @@ ActiveRecord::Schema.define(version: 20160704090510) do
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
   add_index "users", ["user_detail_id"], name: "index_users_on_user_detail_id", using: :btree
 
+  add_foreign_key "assign_rental_items", "rentable_items"
+  add_foreign_key "assign_rental_items", "rental_orders"
   add_foreign_key "employees", "employee_categories"
   add_foreign_key "employees", "groups"
   add_foreign_key "fes_dates", "fes_years"

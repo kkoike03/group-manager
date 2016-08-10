@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :assign_rental_items
   get 'health_check_pages/cooking'
   get 'health_check_pages/no_cooking'
 

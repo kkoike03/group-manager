@@ -1,0 +1,12 @@
+<%= simple_form_for @assign_rental_item, wrapper: "horizontal_form", :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.association :rental_order %>
+  <%= error_span(@assign_rental_item[:rental_order_id]) %>
+  <%= f.association :rentable_item %>
+  <%= error_span(@assign_rental_item[:rentable_item_id]) %>
+  <%= f.input :num %>
+  <%= error_span(@assign_rental_item[:num]) %>
+
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                assign_rental_items_path, :class => 'btn btn-default' %>
+<% end %>
