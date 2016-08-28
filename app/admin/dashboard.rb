@@ -47,6 +47,14 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
 
+    columns do
+      column do
+        panel "物品貸出書類" do
+          li link_to("物品貸出票", rental_item_pages_for_pasting_room_sheet_path(format: 'pdf'))
+        end
+      end
+    end
+
   end # content
 
 end
