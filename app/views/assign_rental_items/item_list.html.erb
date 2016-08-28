@@ -4,10 +4,10 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th><%= Group.model_name.human.pluralize.titleize %></th>
+      <th><%= RentalOrder.human_attribute_name(:num) %></th>
       <% @rentables.each do |rentable| %>
-        <th><%= Group.model_name.human.pluralize.titleize %></th>
-        <th><%= RentalOrder.human_attribute_name(:num) %></th>
-        <th><%= rentable.to_s %>の割当</th>
+        <th><center><%= rentable.to_s %>の割当</center></th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       <% end %>
     </tr>
@@ -19,13 +19,13 @@
         <td><%= order.num %></td>
         <% @rentables.each do |rentable| %>
           <% assign = AssignRentalItem.where(rental_order_id: order)
-            .where(rentable_item_id: rentable).first() %>
-          <td><%= assign.num %></td>
-          <td>
+          .where(rentable_item_id: rentable).first() %>
+        <td><center><%= assign.num %></center></td>
+        <td><center>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_assign_rental_item_path(assign), :class => 'btn btn-default btn-xs' %>
-          </td>
-        <% end %>
+              edit_assign_rental_item_path(assign), :class => 'btn btn-default btn-xs' %>
+        </center></td>
+      <% end %>
       </tr>
     <% end %>
   </tbody>
