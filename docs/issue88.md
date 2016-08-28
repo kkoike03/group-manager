@@ -94,3 +94,99 @@ pdf生成用メソッドを追加
 ```diff
 +  get 'rental_item_pages/for_pasting_room_sheet'
 ```
+
+# pdfのViewを作成
+
+Viewを作成
+`app/views/rental_item_pages/for_pasting_room_sheet.pdf.erb`を作成
+
+```diff
++<style type='text/css'>
++   body {
++       font-family: "IPAGothic"
++   }
++  table {
++    border-collapse: separate;
++    border-spacing: 0;
++    vertical-align: middle;
++    width: 100%;
++    table-layout: fixed;
++  }
++  caption, th, td {
++    text-align: center;
++    font-weight: normal;
++    vertical-align: middle;
++    border: solid 1px;
++    padding: 0.5em;
++  }
++  .pagebreak{
++    page-break-after: always;
++  }
++</style>
++<% @rentables.each_with_index do |rentable, i| %>
++    <div class='pagebreak'>
++    <table align="center">
++      <tr>
++        <td style="border: 0"><h3>物品貸出表</h3></td>
++        <td style="border: 0"><h2><%= rentable.stocker_item.rental_item.to_s %></h2></td>
++        <td style="border: 0"><h2><%= rentable.stocker_place.to_s %></h2></td>
++      </tr>
++      <tr>
++        <td>貸出日時</td>
++        <td><%= GroupManagerCommonOption.first.rental_item_day %></td>
++        <td><%= GroupManagerCommonOption.first.rental_item_time %></td>
++      </tr>
++      <tr>
++        <td>返却日時</td>
++        <td><%= GroupManagerCommonOption.first.return_item_day %></td>
++        <td><%= GroupManagerCommonOption.first.return_item_time %></td>
++      </tr>
++    </table>
++    <br>
++    <table algin="center">
++      <thead>
++        <tr>
++          <td width="35%">団体名</td>
++          <td width="15%">数量</td>
++          <td width="25%">貸出</td>
++          <td width="25%">返却</td>
++        </tr>
++      </thead>
++      <tbody>
++        <% @assignments.where(rentable_item_id: rentable.id).each do |assignment| %>
++          <tr>
++            <td style="font-size : <%= size_calibration(assignment.rental_order.group.name) %>">
++              <%= assignment.rental_order.group.name %>
++            </td>
++            <td><%= assignment.num %></td>
++            <td></td>
++            <td></td>
++          </tr>
++        <% end %>
++      </tbody>
++    </table>
++    <br>
++    <div>
++      ※物品貸出，返却の際に○印をつけてください<br>
++      ※他団体の迷惑になるので申請した数以上の物品は持ち出さないでください<br>
++      ※何かありましたら本部まで連絡してください<br>
++    </div>
++  </div>
++
++<% end %>
+```
+
+Fontサイズ変更用のヘルパーメソッドを作成
+`app/helpers/assign_rental_items_helper.rb`を編集
+
+```diff
+ module AssignRentalItemsHelper
++  def size_calibration(str)
++    if str.length >= 10 then
++      "10px"
++    else
++      "14px"
++    end
++  end
+ end
+```
