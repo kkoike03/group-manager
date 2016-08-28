@@ -16,3 +16,10 @@ Running via Spring preloader in process 25837
       invoke    scss
       create      app/assets/stylesheets/rental_item_pages.scss
 ```
+
+# 貸出返却日時を設定するカラムを作成する
+
+```sh
+$ bundle exec rails g migration AddRentalItemDatesToGroupManagerCommonOption rental_item_day:string rental_item_time:string return_item_day:string return_item_time:string
+$ bundle exec rake db:migrate
+```
