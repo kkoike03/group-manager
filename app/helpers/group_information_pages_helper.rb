@@ -1,0 +1,2 @@
+module GroupInformationPagesHelper
+end
