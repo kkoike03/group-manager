@@ -65,3 +65,25 @@ pdf生成用メソッドを追加
 +  end
  end
 ```
+
+# 書類生成用のリンクを追加
+
+`app/admin/dashboard.rb`を編集
+
+```diff
+    columns do
+      column do
+        panel "物品貸出書類" do
+          li link_to("物品貸出票", rental_item_pages_for_pasting_room_sheet_path(format: 'pdf'))
++          li link_to("参加団体情報管理表", group_information_pages_group_information_sheet_path(format: 'pdf'))
+        end
+      end
+    end
+```
+
+ルーティングの設定
+`config/routes.rb`を編集
+
+```diff
++  get 'group_information_pages/group_information_sheet'
+```

@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'stool_test_pages/for_health_center_sheet'
   get 'rental_item_pages/for_pasting_room_sheet'
 
+  get 'group_information_pages/group_information_sheet'
+
   resources :group_project_names
   resources :stage_common_options
   resources :rentable_items
