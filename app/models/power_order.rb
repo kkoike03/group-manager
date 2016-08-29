@@ -3,6 +3,8 @@ class PowerOrder < ActiveRecord::Base
 
   validates :group_id, :item, :power, :manufacturer, :model, presence: true # 必須項目
 
+  scope :year, -> (year) {joins(:group).where(groups: {fes_year_id: year})}
+
   def stage?
     group_category = Group.find(group_id).group_category_id
     if 3 == group_category
