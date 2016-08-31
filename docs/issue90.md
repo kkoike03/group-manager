@@ -247,3 +247,19 @@ Viewを作成
 +  end
  end
 ```
+
+# Viewの表示に必要なscopeを作成
+
+総務が確定した場所の情報をグループのIDで検索するスコープ
+`app/models/assign_group_place.rb`を編集
+
+```diff
++  scope :find_by_group, -> (group_id) {joins(:place_order).where(place_orders: {group_id: group_id})}
+```
+
+総務が確定した貸出物品の情報をグループのIDで検索するスコープ
+`app/models/assign_rental_item.rb`を編集
+
+```diff
++  scope :find_by_group, -> (group_id) {joins(:rental_order).where(rental_orders: {group_id: group_id})}
+```

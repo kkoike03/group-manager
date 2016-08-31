@@ -10,6 +10,7 @@ class AssignRentalItem < ActiveRecord::Base
   validate :valid_total_rentables  # カスタムバリデートを実行
 
   scope :year, -> (year) {joins(rental_order: [:group]).where(groups: {fes_year_id: year})}
+  scope :find_by_group, -> (group_id) {joins(:rental_order).where(rental_orders: {group_id: group_id})}
 
   def valid_item
     return if rental_order.rental_item_id == rentable_item.stocker_item.rental_item_id
