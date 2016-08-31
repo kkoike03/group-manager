@@ -263,3 +263,10 @@ Viewを作成
 ```diff
 +  scope :find_by_group, -> (group_id) {joins(:rental_order).where(rental_orders: {group_id: group_id})}
 ```
+
+指定した年のGroupを取得するスコープ
+`app/models/group.rb b/app/models/group.rb`を編集
+
+```diff
++  scope :year, -> (year) {where(fes_year_id: year)}
+```
