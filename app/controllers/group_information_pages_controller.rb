@@ -23,7 +23,7 @@ class GroupInformationPagesController < ApplicationController
   def group_information_sheet
     this_year = FesYear.this_year
 
-    @groups = Group.year(this_year)
+    @groups = Group.year(this_year).order(:group_category_id, :name)
     @fes_date = FesDate.where(fes_year_id: this_year)
     @rentables = RentableItem.year(this_year)
     @assignment_items = AssignRentalItem.year(this_year)

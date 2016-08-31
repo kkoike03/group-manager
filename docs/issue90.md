@@ -270,3 +270,12 @@ Viewを作成
 ```diff
 +  scope :year, -> (year) {where(fes_year_id: year)}
 ```
+
+# 参加形式と団体名でソートして表示させる
+
+`app/controllers/group_information_pages_controller.rb`を編集
+
+```diff
+-    @groups = Group.year(this_year)
++    @groups = Group.year(this_year).order(:group_category_id, :name)
+```
