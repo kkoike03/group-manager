@@ -279,3 +279,7 @@ Viewを作成
 -    @groups = Group.year(this_year)
 +    @groups = Group.year(this_year).order(:group_category_id, :name)
 ```
+
+# 確認用のテストデータを作成する
+
+`db/fixtures/development/`にシードデータを記述する
