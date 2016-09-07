@@ -1,12 +1,18 @@
 <%= simple_form_for @assign_rental_item, wrapper: "horizontal_form", :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.association :rental_order %>
-  <%= error_span(@assign_rental_item[:rental_order_id]) %>
-  <%= f.association :rentable_item %>
-  <%= error_span(@assign_rental_item[:rentable_item_id]) %>
+  <%= f.hidden_field :rental_order_id %>
+  <%= f.hidden_field :rentable_item_id %>
+
+  '希望情報: '<%= @assign_rental_item.rental_order.to_s %> <br>
+  '割当対象: '<%= @assign_rental_item.rentable_item.to_s %>
+
   <%= f.input :num %>
   <%= error_span(@assign_rental_item[:num]) %>
 
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                assign_rental_items_path, :class => 'btn btn-default' %>
+    controller: 'assign_rental_items',
+    action: 'item_list',
+    item_id: @assign_rental_item.rental_order.rental_item_id,
+    :class => 'btn btn-default btn-xs' %>
+
 <% end %>
