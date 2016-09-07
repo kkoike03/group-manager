@@ -13,11 +13,10 @@
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
-              assign_rental_items_path, :class => 'btn btn-default'  %>
+  controller: 'assign_rental_items',
+  action: 'item_list',
+  item_id: @assign_rental_item.rental_order.rental_item_id,
+  :class => 'btn btn-default btn-xs' %>
+
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_assign_rental_item_path(@assign_rental_item), :class => 'btn btn-default' %>
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              assign_rental_item_path(@assign_rental_item),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>

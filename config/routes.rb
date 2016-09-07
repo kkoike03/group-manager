@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  resources :assign_rental_items
+  resources :assign_rental_items do
+    # 標準の7つ以外を追加する
+    collection do
+      get 'item_list'
+    end
+  end
+
   get 'health_check_pages/cooking'
   get 'health_check_pages/no_cooking'
 
