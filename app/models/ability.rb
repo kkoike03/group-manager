@@ -56,6 +56,7 @@ class Ability
       cannot [:create, :destroy], Stage # 作成・削除不可
       cannot [:create, :destroy], GroupManagerCommonOption # 作成・削除不可
       cannot [:create, :destroy], RentalItemAllowList # 作成・削除不可
+      cannot [:destroy], AssignGroupPlace # 削除不可
       cannot [:destroy], AssignRentalItem # 削除不可, 0で対応
     end
     if user.role_id == 3 then # for user (デフォルトのrole)

@@ -53,6 +53,15 @@ class Group < ActiveRecord::Base
     order.save
   end
 
+  # 使用場所用のレコードを生成
+  def init_assign_place_order
+    return unless order = PlaceOrder.find_by(group_id: id)
+    Place.find_or_create_by(id: 0, name_ja:"未入力")
+    AssignGroupPlace.find_or_create_by(place_order_id: order.id) do |agp|
+      agp.place_id = 0
+    end
+  end
+
   def init_stage_common_option # StageCommonOptionのレコードが無ければ登録
     return unless group_category_id == 3 # ステージ企画でなければ戻る
     order = StageCommonOption.new( group_id: id, own_equipment: false, bgm: false, camera_permittion: false, loud_sound: false, stage_content: '未回答' )

@@ -13,4 +13,8 @@ class PlaceOrder < ActiveRecord::Base
         errors.add( :third , "候補が重複しています。")
     end
   end
+
+  def to_s
+    self.group.name
+  end
 end
