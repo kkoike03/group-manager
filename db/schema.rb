@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810122527) do
+ActiveRecord::Schema.define(version: 20160810212640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,18 @@ ActiveRecord::Schema.define(version: 20160810122527) do
 
   add_index "assign_rental_items", ["rentable_item_id"], name: "index_assign_rental_items_on_rentable_item_id", using: :btree
   add_index "assign_rental_items", ["rental_order_id"], name: "index_assign_rental_items_on_rental_order_id", using: :btree
+
+  create_table "assign_stages", force: :cascade do |t|
+    t.integer  "stage_order_id"
+    t.integer  "stage_id"
+    t.string   "time_point_start"
+    t.string   "time_point_end"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "assign_stages", ["stage_id"], name: "index_assign_stages_on_stage_id", using: :btree
+  add_index "assign_stages", ["stage_order_id"], name: "index_assign_stages_on_stage_order_id", using: :btree
 
   create_table "config_user_permissions", force: :cascade do |t|
     t.string   "form_name",                     null: false
@@ -405,6 +417,8 @@ ActiveRecord::Schema.define(version: 20160810122527) do
   add_foreign_key "assign_group_places", "places"
   add_foreign_key "assign_rental_items", "rentable_items"
   add_foreign_key "assign_rental_items", "rental_orders"
+  add_foreign_key "assign_stages", "stage_orders"
+  add_foreign_key "assign_stages", "stages"
   add_foreign_key "employees", "employee_categories"
   add_foreign_key "employees", "groups"
   add_foreign_key "fes_dates", "fes_years"

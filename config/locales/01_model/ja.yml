@@ -22,6 +22,7 @@ ja:
       group_project_name: 企画名
       stage: ステージ
       group_manager_common_option: アプリ共通設定
+      assign_stage: 使用ステージ
       assign_group_place: 使用場所
       assign_rental_item: 貸出物品の割当
     attributes:
@@ -152,6 +153,16 @@ ja:
         group_manager_common_option:
           cooking_start_time: 調理開始時間
           date_of_stool_test: 検便実施日
+        assign_stage:
+          stage_order: 団体名
+          fes_date: 開催日
+          is_sunny: 天候
+          order_time_start: 希望時刻(開始)
+          order_time_end: 希望時刻(終了)
+          order_time_interval: 希望時間幅
+          stage: 使用ステージ
+          time_point_start: 開始時刻
+          time_point_end: 終了時刻
         assign_group_place:
           place_order: 団体名
           place: 使用場所

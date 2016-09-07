@@ -47,6 +47,23 @@ class Group < ActiveRecord::Base
     order.save
   end
 
+  # ステージ企画の場所決定用のレコードを生成
+  def init_assign_stage
+    return unless group_category_id == 3 # ステージ企画でなければ戻る
+    return unless orders = StageOrder.where(group_id: id)
+    empty = "未回答"
+
+    Stage.find_or_create_by(id: 0, name_ja:"未入力")
+
+    orders.each do |ord|
+      as = AssignStage.find_or_initialize_by(stage_order_id: ord.id)
+      as.stage_id = 0
+      as.time_point_start = empty
+      as.time_point_end   = empty
+      as.save(validate: false) if as.new_record?
+    end
+  end
+
   def init_place_order
     return if group_category_id == 3 # ステージ企画ならば戻る
     order = PlaceOrder.new( group_id: id )
