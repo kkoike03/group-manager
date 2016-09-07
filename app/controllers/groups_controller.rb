@@ -35,6 +35,7 @@ class GroupsController < GroupBase
         @group.init_place_order # 実施場所申請用のレコードを生成
         @group.init_stage_common_option # ステージ企画の共通項目のレコードを生成
         @group.init_assign_stage # ステージ団体使用場所用のレコードを生成
+        @group.init_assign_place_order # 使用場所用のレコードを生成
 
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }

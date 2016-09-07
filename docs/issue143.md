@@ -216,3 +216,256 @@ Running via Spring preloader in process 42730
    index do
      selectable_column
 ```
+
+## バリデータ追加
+
+貸出希望と貸出可能物品が同一のときのみ許可するバリデータを追加．
+
+
+## 割当数0のレコードを生成する
+
+タスクを作成．
+
+```python
+$ bundle exec rails g task assign_rental_item
+Running via Spring preloader in process 52549
+      create  lib/tasks/assign_rental_item.rake
+```
+
+`lib/tasks/assign_rental_item.rake`を編集．実行は
+
+```sh
+$ rake assign_rental_item:init_this_year
+```
+
+## 割当ページの変更
+
+1物品に関する割当一覧を
+`assign_rental_items/item_list?item_id=物品ID`
+で出力する．
+
+
+コントローラメソッドに`item_list`を追加．
+
+```diff
+@@ -7,6 +7,18 @@ class AssignRentalItemsController < ApplicationController
+     @assign_rental_items = AssignRentalItem.all
+   end
+
++  # GET /assign_rental_items?item_id=XXX
++  def item_list
++    # get パラメータからRentalItemレコードを取得
++    rental_item = RentalItem.find(params[:item_id])
++    # 今年度のrental_itemに関連するorderとrentable_itemを取得
++    this_year = FesYear.this_year()
++    @orders = RentalOrder.year(this_year).where(rental_item_id: rental_item)
++    @rentables = RentableItem.year(this_year)
++      .joins(stocker_item: :rental_item)
++      .where(rental_items: {id: rental_item})
++  end
++
+   # GET /assign_rental_items/1
+   # GET /assign_rental_items/1.json
+```
+
+このメソッドでrenderされるviewファイル
+`app/views/assign_rental_items/item_list.html.erb`を作成．
+
+ルーティングを設定
+
+```diff
+ Rails.application.routes.draw do
+-  resources :assign_rental_items
++  resources :assign_rental_items do
++    # 標準の7つ以外を追加する
++    collection do
++      get 'item_list'
++    end
++  end
++
+   get 'health_check_pages/cooking'
+```
+
+
+## インデックスページの変更
+
+インデックスページは各物品の割当ページヘのリンクを生成する．
+コントローラで全物品を取得し，viewへ渡す
+
+```diff
+@@ -4,7 +4,7 @@ class AssignRentalItemsController < ApplicationController
+   # GET /assign_rental_items
+   # GET /assign_rental_items.json
+   def index
+-    @assign_rental_items = AssignRentalItem.all
++    @items = RentalItem.all
+   end
+
+   # GET /assign_rental_items?item_id=XXX
+```
+
+viewページを変更
+
+```diff
++++ b/app/views/assign_rental_items/index.html.erb
+@@ -5,36 +5,22 @@
+ <table class="table table-striped">
+   <thead>
+     <tr>
+-      <th><%= model_class.human_attribute_name(:id) %></th>
+-      <th><%= model_class.human_attribute_name(:rental_order_id) %></th>
+-      <th><%= model_class.human_attribute_name(:rentable_item_id) %></th>
+-      <th><%= model_class.human_attribute_name(:num) %></th>
+-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
++      <th><%= RentalItem.human_attribute_name(:name_ja) %></th>
++      <th></th>
+     </tr>
+   </thead>
+
+@@ -5,36 +5,22 @@
+ <table class="table table-striped">
+   <thead>
+     <tr>
+-      <th><%= model_class.human_attribute_name(:id) %></th>
+-      <th><%= model_class.human_attribute_name(:rental_order_id) %></th>
+-      <th><%= model_class.human_attribute_name(:rentable_item_id) %></th>
+-      <th><%= model_class.human_attribute_name(:num) %></th>
+-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
++      <th><%= RentalItem.human_attribute_name(:name_ja) %></th>
++      <th></th>
+     </tr>
+   </thead>
+   <tbody>
+-    <% @assign_rental_items.each do |assign_rental_item| %>
++    <% @items.each do |item| %>
+       <tr>
+-        <td><%= link_to assign_rental_item.id, assign_rental_item_path(assign_rental_item) %></td>
+-        <td><%= assign_rental_item.rental_order_id %></td>
+-        <td><%= assign_rental_item.rentable_item_id %></td>
+-        <td><%= assign_rental_item.num %></td>
+-        <td><%=l assign_rental_item.created_at %></td>
++        <td><%= item.name_ja %></td>
+         <td>
+           <%= link_to t('.edit', :default => t("helpers.links.edit")),
+-                      edit_assign_rental_item_path(assign_rental_item), :class => 'btn btn-default btn-xs' %>
+-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+-                      assign_rental_item_path(assign_rental_item),
+-                      :method => :delete,
+-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+-                      :class => 'btn btn-xs btn-danger' %>
++            controller: 'assign_rental_items',
++            action: 'item_list',
++            item_id: item.id,
++            :class => 'btn btn-default btn-xs' %>
+         </td>
+       </tr>
+     <% end %>
+   </tbody>
+ </table>
+-
+-<%= link_to t('.new', :default => t("helpers.links.new")),
+-            new_assign_rental_item_path,
+-            :class => 'btn btn-primary' %>
+```
+
+## _form修正
+
+希望レコードとrentable_itemレコードを変更不可へ
+
+パラメータはhiddenで渡す．
+ただし表示はする．
+
+```diff
+@@ -1,8 +1,10 @@
+ <%= simple_form_for @assign_rental_item, wrapper: "horizontal_form", :html => { :class => 'form-horizontal' } do |f| %>
+-  <%= f.association :rental_order %>
+-  <%= error_span(@assign_rental_item[:rental_order_id]) %>
+-  <%= f.association :rentable_item %>
+-  <%= error_span(@assign_rental_item[:rentable_item_id]) %>
++  <%= f.hidden_field :rental_order_id %>
++  <%= f.hidden_field :rentable_item_id %>
++
++  '希望情報: '<%= @assign_rental_item.rental_order.to_s %> <br>
++  '割当対象: '<%= @assign_rental_item.rentable_item.to_s %>
++
+   <%= f.input :num %>
+```
+
+## リンク修正
+
+_form, showでcancel, backのリンク先を各物品の一覧へ変更
+デストロイボタンを削除
+
+```diff
+diff --git a/app/views/assign_rental_items/_form.html.erb b/app/views/assign_rental_items/_form.html.erb
+index 952be84..7641650 100644
+--- a/app/views/assign_rental_items/_form.html.erb
++++ b/app/views/assign_rental_items/_form.html.erb
+@@ -10,5 +10,9 @@
+
+   <%= f.button :submit, :class => 'btn-primary' %>
+   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+-                assign_rental_items_path, :class => 'btn btn-default' %>
++    controller: 'assign_rental_items',
++    action: 'item_list',
++    item_id: @assign_rental_item.rental_order.rental_item_id,
++    :class => 'btn btn-default btn-xs' %>
++
+ <% end %>
+diff --git a/app/views/assign_rental_items/show.html.erb b/app/views/assign_rental_items/show.html.erb
+index d9f3475..f26ffd6 100644
+--- a/app/views/assign_rental_items/show.html.erb
++++ b/app/views/assign_rental_items/show.html.erb
+@@ -13,11 +13,10 @@
+ </dl>
+
+ <%= link_to t('.back', :default => t("helpers.links.back")),
+-              assign_rental_items_path, :class => 'btn btn-default'  %>
++  controller: 'assign_rental_items',
++  action: 'item_list',
++  item_id: @assign_rental_item.rental_order.rental_item_id,
++  :class => 'btn btn-default btn-xs' %>
++
+ <%= link_to t('.edit', :default => t("helpers.links.edit")),
+               edit_assign_rental_item_path(@assign_rental_item), :class => 'btn btn-default' %>
+-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+-              assign_rental_item_path(@assign_rental_item),
+-              :method => 'delete',
+```
+
+## 権限設定
+
+管理者は削除不可．
+
+`Ability`モデルに管理者用の権限を追加
+
+```diff
+diff --git a/app/models/ability.rb b/app/models/ability.rb
+@@ -56,6 +56,7 @@ class Ability
+       cannot [:create, :destroy], Stage # 作成・削除不可
+       cannot [:create, :destroy], GroupManagerCommonOption # 作成・削除不可
+       cannot [:create, :destroy], RentalItemAllowList # 作成・削除不可
++      cannot [:destroy], AssignRentalItem # 削除不可, 0で対応
+     end
+     if user.role_id == 3 then # for user (デフォルトのrole)
+       can :manage, :welcome
+```
+
+cancancanの設定をコントローラから反映
+
+```diff
+diff --git a/app/controllers/assign_rental_items_controller.rb b/app/controllers/assign_rental_items_controller.rb
+index 6baad7c..403d397 100644
+--- a/app/controllers/assign_rental_items_controller.rb
++++ b/app/controllers/assign_rental_items_controller.rb
+@@ -1,5 +1,6 @@
+ class AssignRentalItemsController < ApplicationController
+   before_action :set_assign_rental_item, only: [:show, :edit, :update, :destroy]
++  load_and_authorize_resource  # for cancancan
+
+   # GET /assign_rental_items
+```
+
+## 数量に関するバリデータを追加

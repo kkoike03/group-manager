@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(version: 20160810212640) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
+  create_table "assign_group_places", force: :cascade do |t|
+    t.integer  "place_order_id", null: false
+    t.integer  "place_id",       null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "assign_group_places", ["place_id"], name: "index_assign_group_places_on_place_id", using: :btree
+  add_index "assign_group_places", ["place_order_id"], name: "index_assign_group_places_on_place_order_id", using: :btree
+
   create_table "assign_rental_items", force: :cascade do |t|
     t.integer  "rental_order_id",  null: false
     t.integer  "rentable_item_id", null: false
@@ -403,6 +413,8 @@ ActiveRecord::Schema.define(version: 20160810212640) do
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
   add_index "users", ["user_detail_id"], name: "index_users_on_user_detail_id", using: :btree
 
+  add_foreign_key "assign_group_places", "place_orders"
+  add_foreign_key "assign_group_places", "places"
   add_foreign_key "assign_rental_items", "rentable_items"
   add_foreign_key "assign_rental_items", "rental_orders"
   add_foreign_key "assign_stages", "stage_orders"

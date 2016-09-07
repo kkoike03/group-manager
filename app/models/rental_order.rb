@@ -11,6 +11,19 @@ class RentalOrder < ActiveRecord::Base
 
   def to_s
     self.group.name + ' (' + self.rental_item.name_ja + \
-    ', 数: ' + self.num.to_s + ')'
+    ', 希望数: ' + self.num.to_s +
+    ', 割当必要残数: ' + self.remaining_num.to_s + ')'
   end
+
+  scope :year, -> (year) {joins(:group).where(groups: {fes_year_id: year})}
+
+  def assigned_num
+    AssignRentalItem.where(rental_order_id: self.id).sum(:num)
+  end
+
+  def remaining_num
+    # 希望数 - 割当数
+    self.num - self.assigned_num
+  end
+
 end
