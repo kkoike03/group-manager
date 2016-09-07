@@ -12,6 +12,8 @@ class Group < ActiveRecord::Base
   validates :group_category, presence: true
   validates :fes_year, presence: true
 
+  scope :year, -> (year) {where(fes_year_id: year)}
+
   # simple_form, activeadminで表示するカラムを指定
   # 関連モデル.groupが関連モデル.group.nameと同等になる
   def to_s
