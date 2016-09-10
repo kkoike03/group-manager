@@ -74,6 +74,8 @@ gem 'twitter-bootstrap-rails'
 gem 'pdfkit'
 gem 'wkhtmltopdf'
 gem 'wkhtmltopdf-heroku'
+# ページネーションを追加
+gem 'kaminari'
 # heroku監視
 gem 'newrelic_rpm'
 
