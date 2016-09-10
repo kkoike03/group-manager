@@ -14,7 +14,7 @@ class AssignRentalItemsController < ApplicationController
     rental_item = RentalItem.find(params[:item_id])
     # 今年度のrental_itemに関連するorderとrentable_itemを取得
     this_year = FesYear.this_year()
-    @orders = RentalOrder.year(this_year).where(rental_item_id: rental_item)
+    @orders = RentalOrder.year(this_year).where(rental_item_id: rental_item).page(params[:page])
     @rentables = RentableItem.year(this_year)
       .joins(stocker_item: :rental_item)
       .where(rental_items: {id: rental_item})
