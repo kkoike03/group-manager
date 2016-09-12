@@ -20,13 +20,21 @@
     page-break-after: always;
   }
 </style>
+<% rows_per_page = 20 # 1ページに表示する行数 %>
 <% @rentables.each_with_index do |rentable, i| %>
+<% this_page_number = 1 # 場所・物品ごとのページ番号 %>
     <div class='pagebreak'>
     <table align="center">
       <tr>
         <td style="border: 0"><h3>物品貸出表</h3></td>
         <td style="border: 0"><h2><%= rentable.stocker_item.rental_item.to_s %></h2></td>
-        <td style="border: 0"><h2><%= rentable.stocker_place.to_s %></h2></td>
+        <td style="border: 0">
+          <h2>
+            <%= rentable.stocker_place.to_s %>
+            <%  np = (@assignments.where(rentable_item_id: rentable.id).count / rows_per_page.to_f).ceil %>
+            <%= "(" + this_page_number.to_s + "/" + np.to_s + ")" %>
+          </h2>
+        </td>
       </tr>
       <tr>
         <td>貸出日時</td>
@@ -50,7 +58,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @assignments.where(rentable_item_id: rentable.id).each do |assignment| %>
+        <% @assignments.where(rentable_item_id: rentable.id).each_with_index do |assignment, j| %>
           <tr>
             <td style="font-size : <%= size_calibration(assignment.rental_order.group.name) %>">
               <%= assignment.rental_order.group.name %>
@@ -59,6 +67,52 @@
             <td></td>
             <td></td>
           </tr>
+          <% if j % rows_per_page == rows_per_page - 1 then %>
+            <% this_page_number += 1 %>
+              </tbody>
+            </table>
+            <br>
+            <div>
+              ※物品貸出，返却の際に○印をつけてください<br>
+              ※他団体の迷惑になるので申請した数以上の物品は持ち出さないでください<br>
+              ※何かありましたら本部まで連絡してください<br>
+            </div>
+            </div>
+            <div class='pagebreak'>
+            <table align="center">
+              <tr>
+                <td style="border: 0"><h3>物品貸出表</h3></td>
+                <td style="border: 0"><h2><%= rentable.stocker_item.rental_item.to_s %></h2></td>
+                <td style="border: 0">
+                  <h2>
+                    <%= rentable.stocker_place.to_s %>
+                    <%= "(" + this_page_number.to_s + "/" + np.to_s + ")" %>
+                  </h2>
+                </td>
+              </tr>
+              <tr>
+                <td>貸出日時</td>
+                <td><%= GroupManagerCommonOption.first.rental_item_day %></td>
+                <td><%= GroupManagerCommonOption.first.rental_item_time %></td>
+              </tr>
+              <tr>
+                <td>返却日時</td>
+                <td><%= GroupManagerCommonOption.first.return_item_day %></td>
+                <td><%= GroupManagerCommonOption.first.return_item_time %></td>
+              </tr>
+            </table>
+            <br>
+            <table algin="center">
+              <thead>
+                <tr>
+                  <td width="35%">団体名</td>
+                  <td width="15%">数量</td>
+                  <td width="25%">貸出</td>
+                  <td width="25%">返却</td>
+                </tr>
+              </thead>
+              <tbody>
+          <% end %>
         <% end %>
       </tbody>
     </table>
@@ -69,5 +123,4 @@
       ※何かありましたら本部まで連絡してください<br>
     </div>
   </div>
-
 <% end %>
