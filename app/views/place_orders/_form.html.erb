@@ -15,6 +15,12 @@
     collection: Place.collections( @place_order.group_id ),
     selected: @place_order.third %>
   <%= error_span(@place_order[:third]) %>
+  
+  <%= f.input :remark,
+    input_html: { value: @place_order.remark == '未回答' ? '' : @place_order.remark },
+    hint: t("「規定外の場所」の場合に備考に記載してください")
+  %>
+  <%= error_span(@place_order[:remark]) %>
 
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
