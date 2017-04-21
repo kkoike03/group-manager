@@ -12,6 +12,8 @@
   <dd><%= Place.find(@place_order.second) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:third) %>:</strong></dt>
   <dd><%= Place.find(@place_order.third) %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:remark) %>:</strong></dt>
+  <dd><%= @place_order.remark %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
