@@ -74,6 +74,7 @@ ja:
           first: 第一希望
           second: 第二希望
           third: 第三希望
+          remark: 備考
         place_allow_list:
           group_category_id: 団体カテゴリ
           place:             場所

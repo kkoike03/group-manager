@@ -63,4 +63,10 @@ PlaceAllowList.seed( :id,
   { id: 58,  place_id: 13, group_category_id: 5, enable: true }, #講義棟部屋B
   { id: 59,  place_id: 14, group_category_id: 5, enable: true }, #マルチメディア
   { id: 60,  place_id: 15, group_category_id: 5, enable: true }, #グラウンド
+
+  #規定外の場所の追加
+  { id: 61,  place_id: 16, group_category_id: 1, enable: true }, # 模擬店(食品販売)
+  { id: 62,  place_id: 16, group_category_id: 2, enable: false}, # 模擬店(物品販売)
+  { id: 63,  place_id: 16, group_category_id: 4, enable: true }, # 展示
+  { id: 64,  place_id: 16, group_category_id: 5, enable: true }, # その他
 )

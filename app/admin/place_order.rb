@@ -13,6 +13,7 @@ ActiveAdmin.register PlaceOrder do
     column :third do  |order|
       order.third  ? Place.find(order.third)  : "未回答"
     end
+    column :remark
   end
 
   csv do
@@ -29,7 +30,6 @@ ActiveAdmin.register PlaceOrder do
     column :third do  |order|
       order.third  ? Place.find(order.third)  : "未回答"
     end
+    column :remark
   end
-
-
 end
