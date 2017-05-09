@@ -32,4 +32,22 @@ ActiveAdmin.register Group do
     column :created_at
     column :updated_at
   end
+
+  # csvダウンロードアクションを作成
+  collection_action :download_group_list, :method => :get do
+    groups = Group.where({ fes_year_id: FesYear.this_year() })
+    csv = CSV.generate do |csv|
+      csv << ['Name', 'E-mail Address']
+      groups.each do |group|
+        groupname = group.name + '( ' + group.user.user_detail.name_ja + ' )'
+        csv << [
+          groupname,
+          group.user.email
+        ]
+      end
+    end
+
+    send_data csv.encode('Shift_JIS', :invalid => :replace, :undef => :replace), type: 'text/csv; charset=shift_jis; header=present', disposition: "attachment; filename=group_list.csv"
+  end
+
 end
