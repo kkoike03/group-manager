@@ -83,7 +83,8 @@ class Ability
 
       # 企画名
       # ConfigUserPermissionの制御は誰か書いてください
-      can :manage, GroupProjectName, :user_id => user.id
+      can :manage, GroupProjectName, :group_id => groups_with_subrep
+      can :new, GroupProjectName
 
       # 副代表 (ConfigUserPermission.id = 2)
       if ConfigUserPermission.find(2).is_accepting
