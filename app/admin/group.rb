@@ -1,4 +1,5 @@
 ActiveAdmin.register Group do
+
   permit_params :user_id, :name, :group_category_id, :activity, :first_question,
                 :fes_year_id
 
