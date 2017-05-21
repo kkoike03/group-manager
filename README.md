@@ -46,6 +46,8 @@ export DEFAULT_URL='localhost:3000'
 ```
 
 stnを利用する場合
+※ パスワードは絶対にgithub上にあげないこと
+パスワードを含む環境設定ファイルは別に切り分けて``source``コメンドで読む込むことをおすすめします
 
 ```
 export SMTP_ADRESS=stn.nagaokaut.ac.jp
