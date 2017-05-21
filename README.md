@@ -37,12 +37,29 @@ export EMAIL_DOMAIN=gmail.com
 export SMTP_AUTH=plain
 export SMTP_TLS=false
 export EMAIL_USERNAME=ユーザ@gmail.com
-export EMAIL_BCC=sample@example.com'
+export EMAIL_BCC='sample@example.com'
 export EMAIL_PASSWORD=パスワード
 export EMAIL_SENDER='送信者名 <ユーザ@gmail.com>'
 
 # local環境で動作させる例
 export DEFAULT_URL='localhost:3000'
+```
+
+stnを利用する場合
+
+```
+export SMTP_ADRESS=stn.nagaokaut.ac.jp
+export SMTP_PORT=465
+export EMAIL_DOMAIN=stn.nagaokaut.ac.jp
+export SMTP_AUTH=plain
+export SMTP_TLS=true
+export DEFAULT_URL=https://nutfes-group-manager.herokuapp.com
+export RAILS_SERVE_STATIC_FILES=true
+
+export EMAIL_USERNAME='s******'
+export EMAIL_BCC='sample@example.com'
+export EMAIL_PASSWORD=stnパスワード
+export EMAIL_SENDER='送信者名 <ユーザ@gmail.com>'
 ```
 
 # Setup方法
@@ -63,3 +80,7 @@ heroku pg:backups
 # 必要なバックアップをダウンロード
 heroku pg:backups public-url a022
 ```
+
+### 開発環境リポジトリ
+
+https://github.com/NUTFes/group_manager_env
