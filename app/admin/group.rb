@@ -33,6 +33,34 @@ ActiveAdmin.register Group do
     column :updated_at
   end
 
+  show do
+    attributes_table do
+      row :id
+      row :name
+      row :group_category_id
+      row :user_name do |group|
+        group.user.user_detail.name_ja
+      end
+
+      row :user_id
+      row :user_tel do |group|
+        group.user.user_detail.tel
+      end
+      row :subrep_name do |group|
+        group.sub_reps.map(&:name_ja).join(", ")
+      end
+      row :subrep_tel do |group|
+        group.sub_reps.map(&:tel).join(", ")
+      end
+      row :activity
+      row :first_question
+      row :created_at
+      row :updated_at
+      row :fes_year_id
+    end
+    active_admin_comments
+  end
+
   # csvダウンロードアクションを作成
   collection_action :download_group_list, :method => :get do
     groups = Group.where({ fes_year_id: FesYear.this_year() })
