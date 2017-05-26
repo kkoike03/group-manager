@@ -1,5 +1,6 @@
 class GroupProjectNamesController < GroupBase
   before_action :set_group_project_name, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # for cancancan
 
   # GET /group_project_names
   # GET /group_project_names.json

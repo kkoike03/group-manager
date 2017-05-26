@@ -36,16 +36,16 @@ class Group < ActiveRecord::Base
   def init_stage_order # StageOrderのレコードが無ければ登録
     return unless group_category_id == 3 # ステージ企画でなければ戻る
     # 1日目，晴れ
-    order = StageOrder.new( group_id: id, fes_date_id: 2, is_sunny: true, time_point_start: '未回答', time_point_end: '未回答', time_interval: '未回答')
+    order = StageOrder.new( group_id: id, fes_date_id: 8, is_sunny: true, time_point_start: '未回答', time_point_end: '未回答', time_interval: '未回答')
     order.save
     # 1日目，雨
-    order = StageOrder.new( group_id: id, fes_date_id: 2, is_sunny: false, time_point_start: '未回答', time_point_end: '未回答', time_interval: '未回答')
+    order = StageOrder.new( group_id: id, fes_date_id: 8, is_sunny: false, time_point_start: '未回答', time_point_end: '未回答', time_interval: '未回答')
     order.save
     # 2日目，晴れ
-    order = StageOrder.new( group_id: id, fes_date_id: 3, is_sunny: true, time_point_start: '未回答', time_point_end: '未回答', time_interval: '未回答')
+    order = StageOrder.new( group_id: id, fes_date_id: 9, is_sunny: true, time_point_start: '未回答', time_point_end: '未回答', time_interval: '未回答')
     order.save
     # 2日目，雨
-    order = StageOrder.new( group_id: id, fes_date_id: 3, is_sunny: false, time_point_start: '未回答', time_point_end: '未回答', time_interval: '未回答')
+    order = StageOrder.new( group_id: id, fes_date_id: 9, is_sunny: false, time_point_start: '未回答', time_point_end: '未回答', time_interval: '未回答')
     order.save
   end
 

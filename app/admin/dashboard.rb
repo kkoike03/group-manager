@@ -56,6 +56,14 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
 
+    columns do
+      column do
+        panel "代表者一覧" do
+          li link_to('[ダウンロード] 参加団体メーリングリスト', download_group_list_admin_groups_path(format: 'csv'))
+        end
+      end
+    end
+
   end # content
 
 end

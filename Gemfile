@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use postgresql as the database for Active Record
@@ -65,7 +64,7 @@ gem 'simple_form'
 gem 'humanize_boolean'
 # bootstrap関連
 # twitter-bootstrap-railsはlessを使うので必要
-gem 'libv8', '3.16.14.13'
+gem 'libv8', '3.16.14.19'
 gem 'therubyracer', '0.12.2'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
@@ -84,3 +83,6 @@ gem 'validates_email_format_of'
 
 # heroku logs
 gem 'rails_12factor', group: :production
+
+# メンテナンスページを表示するGem
+gem 'turnout'

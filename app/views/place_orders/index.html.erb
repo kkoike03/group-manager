@@ -9,6 +9,7 @@
       <th><%= model_class.human_attribute_name(:first) %></th>
       <th><%= model_class.human_attribute_name(:second) %></th>
       <th><%= model_class.human_attribute_name(:third) %></th>
+      <th><%= model_class.human_attribute_name(:remark) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
         <td><%= place_order.first  ? Place.find(place_order.first)  : "未回答" %></td>
         <td><%= place_order.second ? Place.find(place_order.second) : "未回答" %></td>
         <td><%= place_order.third  ? Place.find(place_order.third)  : "未回答" %></td>
+        <td><%= place_order.remark %></td>
         <td>
           <%= show_edit_botton(edit_place_order_path(place_order), place_order) %>
         </td>

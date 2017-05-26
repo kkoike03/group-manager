@@ -73,6 +73,6 @@ class PlaceOrdersController < GroupBase
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def place_order_params
-      params.require(:place_order).permit(:group_id, :first, :second, :third)
+      params.require(:place_order).permit(:group_id, :first, :second, :third, :remark)
     end
 end
