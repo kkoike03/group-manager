@@ -88,4 +88,8 @@ ActiveAdmin.register StageOrder do
     end
     active_admin_comments
   end
+
+  preserve_default_filters!
+  filter :fes_year
+
 end

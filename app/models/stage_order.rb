@@ -1,6 +1,7 @@
 class StageOrder < ActiveRecord::Base
   belongs_to :group
   belongs_to :fes_date
+  has_one :fes_year, through: :fes_date
 
   validates :group_id, :fes_date_id, presence: true
   validates :group_id, :uniqueness => {:scope => [:fes_date_id, :is_sunny] } # 日付と天候でユニーク
