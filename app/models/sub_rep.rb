@@ -2,6 +2,7 @@ class SubRep < ActiveRecord::Base
   belongs_to :group
   belongs_to :department
   belongs_to :grade
+  has_one :fes_year, through: :group
 
   # 必須入力
   validates :group_id, :name_ja, :name_en, :tel, :email, :department_id, :grade_id,
