@@ -2,6 +2,7 @@ class FoodProduct < ActiveRecord::Base
   belongs_to :group
   has_many :purchase_list
   has_many :employees, through: :group
+  has_one :fes_year, through: :group
 
   validates_presence_of :group_id, :name, :first_day_num, :second_day_num
   validates_numericality_of :group_id, :first_day_num, :second_day_num
