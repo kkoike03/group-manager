@@ -39,5 +39,7 @@ ActiveAdmin.register StageCommonOption do
     column :stage_content
   end
 
+  preserve_default_filters!
+  filter :fes_year
 
 end
