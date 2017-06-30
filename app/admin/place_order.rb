@@ -32,4 +32,8 @@ ActiveAdmin.register PlaceOrder do
     end
     column :remark
   end
+
+  preserve_default_filters!
+  filter :fes_year
+
 end
