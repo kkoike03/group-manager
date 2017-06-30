@@ -28,4 +28,7 @@ ActiveAdmin.register AssignGroupPlace do
     f.actions
   end
 
+  preserve_default_filters!
+  filter :fes_year
+
 end
