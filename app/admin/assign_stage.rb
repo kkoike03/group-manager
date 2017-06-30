@@ -55,6 +55,10 @@ ActiveAdmin.register AssignStage do
     end
     f.actions
   end
+
+  preserve_default_filters!
+  filter :fes_year
+
 end
 
 def set_time_point
