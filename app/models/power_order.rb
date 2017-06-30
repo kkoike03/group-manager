@@ -1,5 +1,6 @@
 class PowerOrder < ActiveRecord::Base
   belongs_to :group
+  has_one :fes_year, through: :group
 
   validates :group_id, :item, :power, :manufacturer, :model, presence: true # 必須項目
 

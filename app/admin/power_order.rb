@@ -25,4 +25,7 @@ ActiveAdmin.register PowerOrder do
     column :model
   end
 
+  preserve_default_filters!
+  filter :fes_year
+
 end
