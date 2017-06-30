@@ -61,6 +61,9 @@ ActiveAdmin.register Group do
     active_admin_comments
   end
 
+  preserve_default_filters!
+  filter :fes_year
+
   # csvダウンロードアクションを作成
   collection_action :download_group_list, :method => :get do
     groups = Group.where({ fes_year_id: FesYear.this_year() })
