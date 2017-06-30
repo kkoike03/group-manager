@@ -1,6 +1,7 @@
 class AssignRentalItem < ActiveRecord::Base
   belongs_to :rental_order
   belongs_to :rentable_item
+  has_one :fes_year, through: :rental_order
 
   validates_presence_of :rental_order_id, :rentable_item_id, :num
   validates :num, numericality: {only_integer: true, greater_than_or_equal_to: 0}
