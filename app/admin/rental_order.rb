@@ -34,4 +34,8 @@ ActiveAdmin.register RentalOrder do
     end
     column :num
   end
+
+  preserve_default_filters!
+  filter :fes_year
+
 end
