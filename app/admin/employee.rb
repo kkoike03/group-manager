@@ -26,4 +26,7 @@ ActiveAdmin.register Employee do
     column :duplication
   end
 
+  preserve_default_filters!
+  filter :fes_year
+
 end
